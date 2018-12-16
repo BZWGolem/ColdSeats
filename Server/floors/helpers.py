@@ -115,6 +115,6 @@ def find_me(token):
                                 .get())
         building_name = reservation.id_desk.number.id_building.name
         number = reservation.id_desk.number.number
-        return get_floor_data(building_name, number, date, token)
+        return {'building_name': building_name, 'number': number}
     except Reservations.DoesNotExist:
         return {'status': 'No current desk reserved or took', 'code': 'E011'}
