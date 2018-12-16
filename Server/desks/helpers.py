@@ -117,6 +117,11 @@ def desk_reserve(id_desk, date, token):
 
 
 def delete_reservation(token, date):
+    if date == '':
+        need_date = datetime.datetime.now().strftime("%Y%m%d")
+    else:
+        need_date = date
+
     try:
         user = Users.select().where(Users.token == token).get()
     except Users.DoesNotExist:
@@ -125,7 +130,7 @@ def delete_reservation(token, date):
     reservation_query = (Reservations.select()
                                      .where(Reservations.id_user == user)
                                      .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED'))
-                                     .where(Reservations.timestamp == date))
+                                     .where(Reservations.timestamp == need_date))
     if reservation_query.exists():
         for reservation in reservation_query:
             Reservations.delete().where(Reservations.id_reservation == reservation).execute()

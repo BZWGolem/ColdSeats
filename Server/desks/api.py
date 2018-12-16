@@ -28,7 +28,7 @@ class Desk(Resource):
 
     delete_args = {
         'token': fields.Str(required=True),
-        'date': fields.Str(required=True),
+        'date': fields.Str(missing=''),
     }
 
     @use_args(get_args)
