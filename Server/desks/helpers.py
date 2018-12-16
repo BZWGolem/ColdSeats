@@ -112,10 +112,11 @@ def delete_reservation(token, date):
 
     reservation_query = (Reservations.select()
                                      .where(Reservations.id_user == user)
-                                     .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED')))
+                                     .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED'))
+                                     .where(Reservations.date == date))
     if reservation_query.exists():
         for reservation in reservation_query:
-            Reservations.delete().where(Reservations.id_reservation == reservation)
+            Reservations.delete().where(Reservations.id_reservation == reservation).execute()
         return {'status': 'Deleted reservation', 'date': date, 'user': user.username}
     else:
         {'status': 'No reservation', 'date': date, 'user': user.name}
