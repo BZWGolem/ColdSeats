@@ -2,13 +2,13 @@ from flask_restful import Resource
 from webargs import fields
 from webargs.flaskparser import use_args
 
-from floors.helpers import get_floor_data, create_floor, create_object
+from floors.helpers import get_floor_data, create_floor, create_object, find_me
 
 
 class Floor(Resource):
     get_args = {
-        'building_name': fields.Str(required=True),
-        'number': fields.Str(required=True),
+        'building_name': fields.Str(required=False),
+        'number': fields.Str(required=False),
         'date': fields.Str(missing=''),
         'token': fields.Str(required=True)
     }
@@ -29,7 +29,10 @@ class Floor(Resource):
 
     @use_args(get_args)
     def get(self, args):
-        return get_floor_data(args['building_name'], args['number'], args['date'], args['token'])
+        if args.get('building_name', None) and args.get('number', None):
+            return get_floor_data(args['building_name'], args['number'], args['date'], args['token'])
+        else:
+            return find_me(args['token'])
     
     @use_args(post_args)
     def post(self, args):

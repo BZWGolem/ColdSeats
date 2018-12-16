@@ -16,5 +16,5 @@ To run server:
 1. mkdir .venv
 2. virtualenv .venv
 3. source .venv/bin/activate
-4. pip3 install -r requirements
+4. pip3 install -r requirements.txt
 5. python3 app.py
