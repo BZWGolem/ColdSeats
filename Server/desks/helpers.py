@@ -119,4 +119,4 @@ def delete_reservation(token, date):
             Reservations.delete().where(Reservations.id_reservation == reservation).execute()
         return {'status': 'Deleted reservation', 'date': date, 'user': user.username}
     else:
-        {'status': 'No reservation', 'date': date, 'user': user.name}
+        {'status': 'No reservation', 'date': date, 'user': user.username}
