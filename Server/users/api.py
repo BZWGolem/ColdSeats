@@ -14,7 +14,8 @@ class User(Resource):
     put_args = {
         'username': fields.Str(required=True),
         'password': fields.Str(required=True),
-        'token': fields.Str(required=False)
+        'token': fields.Str(required=False),
+        'building_name': fields.Str(required=True)
     }
 
     @use_args(post_args)
@@ -23,4 +24,5 @@ class User(Resource):
 
     @use_args(put_args)
     def put(self, args):
-        return create_user(args['username'], args['password'], args.get('token', None))
+        print(args)
+        return create_user(args['username'], args['password'], args['building_name'], args.get('token', None))

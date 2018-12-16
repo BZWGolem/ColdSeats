@@ -43,6 +43,7 @@ class Users(BaseModel):
     pass_hash = TextField(null=True)
     token = TextField(null=True)
     username = CharField(null=True, unique=True)
+    id_building = ForeignKeyField(backref='buildings_id_building_set', column_name='id_building', field='id_building', model=Buildings)
 
     class Meta:
         table_name = 'users'

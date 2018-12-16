@@ -3,8 +3,8 @@ import requests
 # python -m pwiz -e postgresql -u piotrbov wpam
 
 # host = 'http://192.168.1.7:5000'
-# host = 'http://127.0.0.1:5000'
-host = 'http://68.183.243.230:5000'
+host = 'http://127.0.0.1:5000'
+# host = 'http://68.183.243.230:5000'
 
 floor_shape = '0,0,0,0,0,0,0,0,0,0;'*9 + '0,0,0,0,0,0,0,0,0,0'
 
@@ -15,22 +15,23 @@ floor_shape12 = '0,0,0,0,0,0,0,0,0,0,0,0,0;'*9 + '0,0,0,0,0,0,0,0,0,0,0,0,0'
 floor_shape1 = '0,0,0,0,0,0;'*4 + '0,0,0,0,0,0'
 floor_shape2 = '0,0,0;'*7 + '0,0,0'
 
-
-# create user
-create = requests.put(host+'/user', data={'username': 'piotrbov@gmail.com', 'password': 'password', 'token': 'f3b7f15d-9d92-4b8c-a78d-f2b93dab90e8'})
-create = requests.put(host+'/user', data={'username': 'kapoplawska@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user1@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user2@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user3@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user4@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user5@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user6@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user7@gmail.com', 'password': 'password'})
-create = requests.put(host+'/user', data={'username': 'user8@gmail.com', 'password': 'password'})
-
 # create buildings
 create_building = requests.post(host+'/building', data={'building_name': 'Spire'})
 create_building = requests.post(host+'/building', data={'building_name': 'Zebra'})
+
+# create user
+create = requests.put(host+'/user', data={'username': 'piotrbov@gmail.com', 'password': 'password',
+                                          'token': 'f3b7f15d-9d92-4b8c-a78d-f2b93dab90e8',
+                                          'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'kapoplawska@gmail.com', 'password': 'password', 'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'user1@gmail.com', 'password': 'password', 'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'user2@gmail.com', 'password': 'password', 'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'user3@gmail.com', 'password': 'password', 'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'user4@gmail.com', 'password': 'password', 'building_name': 'Spire'})
+create = requests.put(host+'/user', data={'username': 'user5@gmail.com', 'password': 'password', 'building_name': 'Zebra'})
+create = requests.put(host+'/user', data={'username': 'user6@gmail.com', 'password': 'password', 'building_name': 'Zebra'})
+create = requests.put(host+'/user', data={'username': 'user7@gmail.com', 'password': 'password', 'building_name': 'Zebra'})
+create = requests.put(host+'/user', data={'username': 'user8@gmail.com', 'password': 'password', 'building_name': 'Zebra'})
 
 # create floors
 get_building = requests.get(host+'/building', data={'id_building': '1'})

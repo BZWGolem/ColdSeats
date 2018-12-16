@@ -1,17 +1,17 @@
-from common.models import Users
+from common.models import Users, Buildings
 from passlib.hash import bcrypt
 import uuid
 
 
-def create_user(username, password, token=None):
+def create_user(username, password, building_name, token=None):
     user_query = Users.select().where(Users.username == username)
+    building = Buildings.select().where(Buildings.name == building_name).get()
     
     if user_query.exists():
-        print('TEST')
         return {'status': 'Username: "{}" exists'.format(username)}
     else:
         pass_hash = bcrypt.hash(password)
-        Users.insert(username=username, pass_hash=pass_hash, token=token).execute()
+        Users.insert(username=username, pass_hash=pass_hash, token=token, id_building=building).execute()
         return {'Username: "{}" created'.format(username)}
 
 
