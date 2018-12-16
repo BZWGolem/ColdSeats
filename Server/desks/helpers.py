@@ -112,7 +112,7 @@ def delete_reservation(token, date):
 
     reservation_query = (Reservations.select()
                                      .where(Reservations.id_user == user)
-                                     .where((Reservations.status == 'TAKEN') | Reservations.status == 'RESERVED'))
+                                     .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED')))
     if reservation_query.exists():
         for reservation in reservation_query:
             Reservations.delete().where(Reservations.id_reservation == reservation)
