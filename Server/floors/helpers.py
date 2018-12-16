@@ -113,7 +113,7 @@ def find_me(token):
                                .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED')))
     if reservation_query.exists():
         reservation = reservation_query.get()
-        building_name = reservation.id_desk.id_building.id_building_name.name
+        building_name = reservation.id_desk.id_building.id_building.name
         number = reservation.id_desk.number.number
         return get_floor_data(building_name, number, date, token)
     else:
