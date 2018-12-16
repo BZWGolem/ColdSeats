@@ -7,7 +7,13 @@ logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG)
 
 
-def get_desk_data(id_desk, date):
+def get_desk_data(id_desk, date, token):
+    if token:
+        try:
+            user = Users.select().where(Users.token == token).get()
+        except Users.DoesNotExist:
+            return {'status': 'Wrong user token', 'code': 'E012'}
+
     if date == '':
         need_date = datetime.datetime.now().strftime("%Y%m%d")
     else:
@@ -31,7 +37,13 @@ def get_desk_data(id_desk, date):
                                    .where(Reservations.id_desk == desk[0])
                                    .where(Reservations.timestamp == need_date)
                                    .get())
-        reservation_dict = {'status': reservation.status, 'username': reservation.id_user.username}
+        if token:
+            if reservation.id_user == user:
+                reservation_dict = {'status': "MY_{}".format(reservation.status), 'username': reservation.id_user.username}
+            else:
+                reservation_dict = {'status': reservation.status, 'username': reservation.id_user.username}
+        else:
+            reservation_dict = {'status': reservation.status, 'username': reservation.id_user.username}
     except Reservations.DoesNotExist:
         reservation_dict = {'status': 'FREE', 'username': ''}
 

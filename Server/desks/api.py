@@ -9,7 +9,8 @@ from desks.helpers import (create_desk, delete_reservation, desk_confirm,
 class Desk(Resource):
     get_args = {
         'id_desk': fields.Int(required=True),
-        'date': fields.Str(missing='')
+        'date': fields.Str(missing=''),
+        'token': fields.Str(required=False)
     }
 
     post_args = {
@@ -32,7 +33,7 @@ class Desk(Resource):
 
     @use_args(get_args)
     def get(self, args):
-        return get_desk_data(args['id_desk'], args['date'])
+        return get_desk_data(args['id_desk'], args['date'], args.get('token', None))
 
     @use_args(post_args)
     def post(self, args):
