@@ -2,7 +2,8 @@ from flask_restful import Resource
 from webargs import fields
 from webargs.flaskparser import use_args
 
-from desks.helpers import get_desk_data, create_desk, desk_confirm, desk_reserve, debug_delete
+from desks.helpers import (create_desk, debug_delete, delete_reservation,
+                           desk_confirm, desk_reserve, get_desk_data)
 
 
 class Desk(Resource):
@@ -24,6 +25,11 @@ class Desk(Resource):
         'token': fields.Str(required=True)
     }
 
+    delete_args = {
+        'token': fields.Str(required=True),
+        'date': fields.Str(required=True),
+    }
+
     @use_args(get_args)
     def get(self, args):
         return get_desk_data(args['id_desk'], args['date'])
@@ -39,5 +45,6 @@ class Desk(Resource):
         elif args['id_desk']:
             return desk_reserve(args['id_desk'], args['date'], args['token'])
     
-    def delete(self):
-        return debug_delete()
+    @use_args(delete_args)
+    def delete(self, args):
+        return delete_reservation(args['token'], args['date'])

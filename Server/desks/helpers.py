@@ -104,6 +104,18 @@ def desk_reserve(id_desk, date, token):
     return {'status': 'Reserved', 'id_desk': id_desk}
 
 
-def debug_delete():
-    Reservations.delete().where(Reservations.id_desk == 5).execute()
-    return {'status': 'Deleted'}
+def delete_reservation(token, date):
+    try:
+        user = Users.select().where(Users.token == token).get()
+    except Users.DoesNotExist:
+        return {'status': 'Wrong user token', 'code': 'E012'}
+
+    reservation_query = (Reservations.select()
+                                     .where(Reservations.id_user == user)
+                                     .where((Reservations.status == 'TAKEN') | Reservations.status == 'RESERVED'))
+    if reservation_query.exists():
+        for reservation in reservation_query:
+            Reservations.delete().where(Reservations.id_reservation == reservation)
+        return {'status': 'Deleted reservation', 'date': date, 'user': user.username}
+    else:
+        {'status': 'No reservation', 'date': date, 'user': user.name}
