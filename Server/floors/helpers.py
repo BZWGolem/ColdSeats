@@ -107,16 +107,14 @@ def find_me(token):
     
     date = datetime.datetime.now().strftime("%Y%m%d")
 
-    reservation_query = (Reservations.select()
-                               .where(Reservations.id_user == user)
-                               .where(Reservations.timestamp == date)
-                               .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED')))
-    if reservation_query.exists():
-        reservation = reservation_query.get()
-        building_name = reservation.id_desk.id_building.id_building.name
+    try:
+        reservation = (Reservations.select()
+                                .where(Reservations.id_user == user)
+                                .where(Reservations.timestamp == date)
+                                .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED'))
+                                .get())
+        building_name = reservation.id_desk.number.id_building.name
         number = reservation.id_desk.number.number
         return get_floor_data(building_name, number, date, token)
-    else:
+    except Reservations.DoesNotExist:
         return {'status': 'No current desk reserved or took', 'code': 'E011'}
-    
-
