@@ -37,7 +37,7 @@ public class TagScanActivity extends AppCompatActivity {
     public void onCreate(Bundle savedState) {
         super.onCreate(savedState);
 
-        setContentView(R.layout.activity_desk_details);
+        setContentView(R.layout.activity_tag_scan);
         //readTagTextView = (TextView)findViewById(R.id.textView2);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         final Context context = this;

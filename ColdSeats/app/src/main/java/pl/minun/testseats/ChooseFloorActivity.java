@@ -24,6 +24,8 @@ public class ChooseFloorActivity extends AppCompatActivity {
     private Spinner floor;
     private Button todayButton;
     private Button tomorrowButton;
+    private  Button findMeButton;
+    private  Button scanNFCButton;
     private ArrayAdapter<String> buildingAdapter;
     private ArrayAdapter<String> floorAdapter;
     private String[] items = new String[]{"", "1", "2", "three"};
@@ -39,6 +41,8 @@ public class ChooseFloorActivity extends AppCompatActivity {
         floor = (Spinner) findViewById(R.id.floor);
         todayButton = (Button) findViewById(R.id.today_button);
         tomorrowButton = (Button) findViewById(R.id.tomorrow_button);
+        findMeButton = (Button) findViewById(R.id.findMeButton);
+        scanNFCButton = (Button) findViewById(R.id.scan_nfc);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
@@ -84,6 +88,31 @@ public class ChooseFloorActivity extends AppCompatActivity {
                 SessionInfo.floorName = floor.getSelectedItem().toString();
                 SessionInfo.forToday = false;
                 Intent myIntent = new Intent(ChooseFloorActivity.this,MapActivity.class);
+                ChooseFloorActivity.this.startActivity(myIntent);
+            }
+        });
+
+        findMeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                khttp.responses.Response res = KHttp.get(SessionInfo.domain + "/floor?token=" + SessionInfo.token);
+                JSONObject obj = res.getJsonObject();
+                try {
+                    SessionInfo.buildingName =  obj.getString("building_name");
+                    SessionInfo.floorName =  obj.getString("number");
+                    SessionInfo.forToday = true;
+                    Intent myIntent = new Intent(ChooseFloorActivity.this,MapActivity.class);
+                    ChooseFloorActivity.this.startActivity(myIntent);
+                }catch(Exception ex){
+                    Toast.makeText(getBaseContext(), "No reservation for today", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        scanNFCButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ChooseFloorActivity.this,TagScanActivity.class);
                 ChooseFloorActivity.this.startActivity(myIntent);
             }
         });

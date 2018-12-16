@@ -27,7 +27,7 @@ dependencies {
     //implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.6'
     //implementation 'com.evrencoskun.library:tableview:0.8.8'
     implementation group: 'khttp', name: 'khttp', version: '0.1.0'
-    implementation 'com.github.tawaasalage:SimpleNFC:5f94c1648e'
+    //implementation 'com.github.tawaasalage:SimpleNFC:5f94c1648e'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
