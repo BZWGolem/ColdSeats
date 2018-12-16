@@ -2,8 +2,8 @@ from flask_restful import Resource
 from webargs import fields
 from webargs.flaskparser import use_args
 
-from desks.helpers import (create_desk, debug_delete, delete_reservation,
-                           desk_confirm, desk_reserve, get_desk_data)
+from desks.helpers import (create_desk, delete_reservation, desk_confirm,
+                           desk_reserve, get_desk_data)
 
 
 class Desk(Resource):
