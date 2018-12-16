@@ -24,7 +24,7 @@ public class MapActivity extends AppCompatActivity {
 
         DisplayMetrics displayMetrics = MapActivity.this.getResources().getDisplayMetrics();
 
-        Toast.makeText(MapActivity.this,displayMetrics.widthPixels + "", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MapActivity.this,displayMetrics.widthPixels + "", Toast.LENGTH_SHORT).show();
 
         //float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
 
@@ -37,8 +37,8 @@ public class MapActivity extends AppCompatActivity {
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(MapActivity.this, "Number:" + floorPlan.shape[position] + "\n status: " + floorPlan.deskToStatusMap.get(floorPlan.shape[position]),
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapActivity.this, "Number:" + floorPlan.shape[position] + "\n status: " + floorPlan.deskToStatusMap.get(floorPlan.shape[position]),
+                    //    Toast.LENGTH_SHORT).show();
 
                 SessionInfo.deskId = floorPlan.shape[position];
                 if(!SessionInfo.deskId.equals("0")) {

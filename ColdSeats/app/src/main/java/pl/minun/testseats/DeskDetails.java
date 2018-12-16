@@ -51,14 +51,13 @@ public class DeskDetails extends AppCompatActivity {
                 mButton.setVisibility(View.GONE);
 
         }else{
-            deleteRsv.setVisibility(View.GONE);
             if(status.getText().equals("FREE"))
                 mButton.setText("Reserve");
             else
                 mButton.setVisibility(View.GONE);
         }
 
-
+        //deleteRsv.setVisibility(View.VISIBLE);
         if(!(status.getText().equals("MY_RESERVED") ||  status.getText().equals("MY_TAKEN")))
             deleteRsv.setVisibility(View.GONE);
 

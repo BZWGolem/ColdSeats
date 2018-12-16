@@ -57,7 +57,7 @@ public class TagScanActivity extends AppCompatActivity {
 
         mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
 
-        Toast.makeText(getBaseContext(), "Move phone closer to the tag", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getBaseContext(), "Move phone closer to the tag", Toast.LENGTH_SHORT).show();
     }
 
     public static String byteArrayToHexString (byte[] b) {

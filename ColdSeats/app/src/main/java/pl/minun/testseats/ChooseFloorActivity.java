@@ -124,8 +124,8 @@ public class ChooseFloorActivity extends AppCompatActivity {
         khttp.responses.Response res = KHttp.get(SessionInfo.domain + "/building");
         JSONObject obj = res.getJsonObject();
 
-        Toast.makeText(ChooseFloorActivity.this, obj.toString(),
-                Toast.LENGTH_SHORT).show();
+       // Toast.makeText(ChooseFloorActivity.this, obj.toString(),
+        //        Toast.LENGTH_SHORT).show();
         try {
              JSONArray bulidingList= obj.optJSONArray("building_list");
             ArrayList<String> buildingsArrayList = new ArrayList<>();
@@ -146,8 +146,8 @@ public class ChooseFloorActivity extends AppCompatActivity {
         khttp.responses.Response res = KHttp.get(SessionInfo.domain + "/building/" +building.getSelectedItem().toString());
         JSONObject obj = res.getJsonObject();
 
-        Toast.makeText(ChooseFloorActivity.this, obj.toString(),
-                Toast.LENGTH_SHORT).show();
+        //Toast.makeText(ChooseFloorActivity.this, obj.toString(),
+         //       Toast.LENGTH_SHORT).show();
         try {
             JSONArray floorList= obj.optJSONArray("floor_list");
             ArrayList<String> floorArrayList = new ArrayList<>();
