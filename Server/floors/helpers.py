@@ -110,7 +110,7 @@ def find_me(token):
     reservation_query = (Reservations.select()
                                .where(Reservations.id_user == user)
                                .where(Reservations.timestamp == date)
-                               .where((Reservations.status == 'TAKEN') or (Reservations.status == 'RESERVED')))
+                               .where((Reservations.status == 'TAKEN') | (Reservations.status == 'RESERVED')))
     if reservation_query.exists():
         reservation = reservation_query.get()
         building_name = reservation.id_desk.id_building.name
