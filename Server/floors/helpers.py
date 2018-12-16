@@ -98,3 +98,25 @@ def create_object(id_building, number, id_object, pos_x, pos_y):
            .execute())
     return {'status': 'Added object to floor'}
 
+
+def find_me(token):
+    try:
+        user = Users.select().where(Users.token == token).get()
+    except Users.DoesNotExist:
+        return {'status': 'Wrong user token', 'code': 'E012'}
+    
+    date = datetime.datetime.now().strftime("%Y%m%d")
+
+    reservation_query = (Reservations.select()
+                               .where(Reservations.id_user == user)
+                               .where(Reservations.timestamp == date)
+                               .where((Reservations.status == 'TAKEN') or (Reservations.status == 'RESERVED')))
+    if reservation_query.exists():
+        reservation = reservation_query.get()
+        building_name = reservation.id_desk.id_building.name
+        number = reservation.id_desk.number.number
+        return get_floor_data(building_name, number, date, token)
+    else:
+        return {'status': 'No current desk reserved or took', 'code': 'E011'}
+    
+
