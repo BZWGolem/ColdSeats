@@ -87,11 +87,17 @@ def desk_confirm(nfc_id, token):
         else:
             return {'status': 'Cannot take', 'id_desk': desk.id_desk, 'code': 'E011'}
     except Reservations.DoesNotExist:
-        Reservations.create(id_user=user,
-                            id_desk=desk,
-                            timestamp=date,
-                            status='TAKEN')
-    
+        rsv_count = (Reservations.select()
+                                 .where(Reservations.timestamp == date)
+                                 .where(Reservations.id_user == user)
+                                 .count())
+        if rsv_count == 0:
+            Reservations.create(id_user=user,
+                                id_desk=desk,
+                                timestamp=date,
+                                status='TAKEN')
+        else:
+            return {'status': 'You have already reservation for today', 'code': 'W002'}
     return {'status': 'Taken', 'id_desk': desk.id_desk}
 
 
@@ -109,10 +115,17 @@ def desk_reserve(id_desk, date, token):
     if reserve.exists():
         return {'status': 'Cannot reserve', 'id_desk': id_desk, 'code': 'E010'}
     
-    Reservations.get_or_create(id_user=user,
-                        id_desk=id_desk,
-                        timestamp=date,
-                        status='RESERVED')
+    rsv_count = (Reservations.select()
+                             .where(Reservations.timestamp == date)
+                             .where(Reservations.id_user == user)
+                             .count())
+    if rsv_count == 0:
+        Reservations.get_or_create(id_user=user,
+                                   id_desk=id_desk,
+                                   timestamp=date,
+                                   status='RESERVED')
+    else:
+        return {'status': 'You have already reservation for {}'.format(date), 'code': 'W003'}
     return {'status': 'Reserved', 'id_desk': id_desk}
 
 
