@@ -1,0 +1,43 @@
+from flask_restful import Resource
+from webargs import fields
+from webargs.flaskparser import use_args
+
+from desks.helpers import get_desk_data, create_desk, desk_confirm, desk_reserve, debug_delete
+
+
+class Desk(Resource):
+    get_args = {
+        'id_desk': fields.Int(required=True),
+        'date': fields.Str(missing='')
+    }
+
+    post_args = {
+        'id_building': fields.Int(required=True),
+        'number': fields.Str(required=True),
+        'nfc_id': fields.Str(required=False)
+    }
+
+    put_args = {
+        'nfc_id': fields.Str(missing=None),
+        'id_desk': fields.Int(missing=None),
+        'date': fields.Str(required=None),
+        'token': fields.Str(required=True)
+    }
+
+    @use_args(get_args)
+    def get(self, args):
+        return get_desk_data(args['id_desk'], args['date'])
+
+    @use_args(post_args)
+    def post(self, args):
+        return create_desk(args['id_building'], args['number'], args.get('nfc_id', None))
+
+    @use_args(put_args)
+    def put(self, args):
+        if args['nfc_id']:
+            return desk_confirm(args['nfc_id'], args['token'])
+        elif args['id_desk']:
+            return desk_reserve(args['id_desk'], args['date'], args['token'])
+    
+    def delete(self):
+        return debug_delete()
